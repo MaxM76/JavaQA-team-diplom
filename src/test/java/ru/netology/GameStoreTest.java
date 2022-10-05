@@ -15,4 +15,34 @@ public class GameStoreTest {
     }
 
     // другие ваши тесты
+    /*
+    publishGame(title, genre)
+
+shouldAddGame()
+shouldNotAddGameIfGameTitleIsEmpty()
+shouldNotAddGameIfGameGenreIsEmpty()
+shouldNotAddGameIfGameExistsInStore()
+
+containsGame(game)
+
+shouldReturnTrueIfGameContainsInStore()
+ShouldReturnFalseIfGameIsNull()
+shouldReturnFalseIfGameAbsentInStore()
+
+addPlayTime(playerName, hours)
+
+shouldAddPlayTimeIfPlayerExist()
+shouldAddPlayTimeIfPlayerAbsent()
+shouldNotAddPlayTimeIfPlayedTimeIsNegative()
+
+getMostPlayer()
+
+shouldReturnNullIfNoPlayersExist()
+shouldReturnMostPlayer()
+
+getSumPlayedTime()
+
+shouldReturnZeroIfNoPlayers()
+shouldReturnSumOfPlayedTime()
+     */
 }
