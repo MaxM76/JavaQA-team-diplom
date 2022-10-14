@@ -48,8 +48,14 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
+        if (hours < 0) {
+            //playedTime.put(playerName, 0);
+            //return;
+            hours = 0;
+        }
         if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
+            playedTime.put(playerName, playedTime.get(playerName) + hours);
+            return;
         } else {
             playedTime.put(playerName, hours);
         }
@@ -77,6 +83,17 @@ public class GameStore {
      * за играми этого каталога
      */
     public int getSumPlayedTime() {
-        return 0;
+        int sum = 0;
+
+        for (Game game : games) {
+            if (game == null) {
+                return sum;
+            }
+            for (String playerName : playedTime.keySet()) {
+                sum += playedTime.get(playerName);
+            }
+            return sum;
+        }
+        return sum;
     }
 }
