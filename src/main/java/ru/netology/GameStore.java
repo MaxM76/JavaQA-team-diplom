@@ -21,7 +21,11 @@ public class GameStore {
      */
     public Game publishGame(String title, String genre) {
         Game game = new Game(title, genre, this);
-        games.add(game);
+        if (game.getTitle() != "" && game.getGenre() != "" && containsGame(game) != true) {
+            games.add(game);
+        } else {
+            game = null;
+        }
         return game;
     }
 
