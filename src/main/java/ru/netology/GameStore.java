@@ -21,7 +21,11 @@ public class GameStore {
      */
     public Game publishGame(String title, String genre) {
         Game game = new Game(title, genre, this);
-        games.add(game);
+        if (game.getTitle() != "" && game.getGenre() != "" && containsGame(game) != true) {
+            games.add(game);
+        } else {
+            game = null;
+        }
         return game;
     }
 
@@ -30,8 +34,8 @@ public class GameStore {
      * если игра есть и false иначе
      */
     public boolean containsGame(Game game) {
-        for (int i = 1; i < games.size(); i++) {
-            if (games.get(i - 1).equals(game)) {
+        for (int i = 0; i < games.size(); i++) {
+            if (games.get(i).equals(game)) {
                 return true;
             }
         }
@@ -44,8 +48,14 @@ public class GameStore {
      * суммироваться с прошлым значением для этого игрока
      */
     public void addPlayTime(String playerName, int hours) {
+        if (hours < 0) {
+            //playedTime.put(playerName, 0);
+            //return;
+            hours = 0;
+        }
         if (playedTime.containsKey(playerName)) {
-            playedTime.put(playerName, playedTime.get(playerName));
+            playedTime.put(playerName, playedTime.get(playerName) + hours);
+            return;
         } else {
             playedTime.put(playerName, hours);
         }
@@ -73,6 +83,17 @@ public class GameStore {
      * за играми этого каталога
      */
     public int getSumPlayedTime() {
-        return 0;
+        int sum = 0;
+
+        for (Game game : games) {
+            if (game == null) {
+                return sum;
+            }
+            for (String playerName : playedTime.keySet()) {
+                sum += playedTime.get(playerName);
+            }
+            return sum;
+        }
+        return sum;
     }
 }
