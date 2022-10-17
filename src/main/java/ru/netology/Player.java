@@ -12,7 +12,11 @@ public class Player {
     private Map<Game, Integer> playedTime = new HashMap<>();
 
     public Player(String name) {
-        this.name = name;
+        if ((name != null) && (!name.isBlank())) {
+            this.name = name.trim();
+        } else {
+            throw new UnableCreateException("Enable create Player with empty name");
+        }
     }
 
     public String getName() {
@@ -22,7 +26,13 @@ public class Player {
     /** добавление игры игроку
     если игра уже была, никаких изменений происходить не должно */
     public void installGame(Game game) {
-        playedTime.put(game, 0);
+        if (game != null) {
+            if (!playedTime.containsKey(game)) {
+                playedTime.put(game, 0);
+            }
+        } else {
+            throw new GameIsNullException("Game is null");
+        }
     }
 
     /** игрок играет в игру game на протяжении hours часов
@@ -31,11 +41,13 @@ public class Player {
     возвращает суммарное количество часов, проигранное в эту игру.
     если игра не была установлена, то надо выкидывать RuntimeException */
     public int play(Game game, int hours) {
-        game.getStore().addPlayTime(name, hours);
         if (playedTime.containsKey(game)) {
-            playedTime.put(game, playedTime.get(game));
+            if ((hours > 0) && (game != null) && (game.getStore() != null)) {
+                game.getStore().addPlayTime(name, hours);
+                playedTime.put(game, playedTime.get(game) + hours);
+            }
         } else {
-            playedTime.put(game, hours);
+            throw new GameIsNotInstalledException("Игра не установлена");
         }
         return playedTime.get(game);
     }
@@ -44,11 +56,12 @@ public class Player {
      суммирует время, проигранное во все игры этого жанра этим игроком */
     public int sumGenre(String genre) {
         int sum = 0;
+        if (genre.isBlank()) {
+            return sum;
+        }
         for (Game game : playedTime.keySet()) {
             if (game.getGenre().equals(genre)) {
                 sum += playedTime.get(game);
-            } else {
-                sum = 0;
             }
         }
         return sum;
@@ -57,6 +70,17 @@ public class Player {
     /** Метод принимает жанр и возвращает игру этого жанра, в которую играли больше всего
      Если в игры этого жанра не играли, возвращается null */
     public Game mostPlayerByGenre(String genre) {
-        return null;
+        if (genre.isBlank()) {
+            return null;
+        }
+        int maxTime = 0;
+        Game result = null;
+        for (Game game : playedTime.keySet()) {
+            if ((game.getGenre().equals(genre)) && (playedTime.get(game) > maxTime)) {
+                maxTime = playedTime.get(game);
+                result = game;
+            }
+        }
+        return result;
     }
 }

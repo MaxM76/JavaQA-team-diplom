@@ -170,7 +170,7 @@ public class PlayerTest {
         player.play(game4, 4);
 
         Game actual = player.mostPlayerByGenre("Аркады");
-        Game expected = game2;
+        Game expected = game1;
 
         assertEquals(expected, actual);
     }
