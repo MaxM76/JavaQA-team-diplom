@@ -294,4 +294,41 @@ public class PlayerTest {
 
         assertEquals(expected, actual);
     }
+
+    @Test
+    public void sumGenreIfGenreIsBlank() {
+        GameStore store = new GameStore();
+        Game game = store.publishGame("Нетология Баттл Онлайн", " ");
+
+        Player player = new Player("Petya");
+        player.installGame(game);
+        player.play(game, 5);
+
+        assertEquals(0, player.sumGenre(game.getGenre()));
+    }
+
+    @Test
+    public void mostPlayerByGenreIfGenreIsBlank() {
+        GameStore store = new GameStore();
+        Game game = store.publishGame("Нетология Баттл Онлайн", " ");
+
+        Player player = new Player("Petya");
+        player.installGame(game);
+        player.play(game, 5);
+
+        assertEquals(null, player.mostPlayerByGenre(game.getGenre()));
+    }
+
+    @Test
+    public void installGameIfGameEqualsNull() {
+        GameStore store = new GameStore();
+        Game game = null;
+
+        Player player = new Player("Petya");
+
+        Assertions.assertThrows(RuntimeException.class, () -> {
+            player.installGame(game);
+            ;
+        });
+    }
 }
