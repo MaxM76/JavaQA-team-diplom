@@ -234,7 +234,7 @@ public class GameStoreTest {
         player1.play(game1, 5);
         Player player2 = new Player("Kolya");
         player2.installGame(game1);
-        player2.play(game2, 15);
+        player2.play(game1, 15);
 
         assertSame(player2.getName(), store.getMostPlayer());
     }
@@ -283,7 +283,7 @@ public class GameStoreTest {
 
         player1.installGame(game1);
         int curPlayedTime = 5;
-        player1.play(game2, curPlayedTime);
+        player1.play(game1, curPlayedTime);
         expected += curPlayedTime;
 
         player1.installGame(game2);
@@ -306,6 +306,23 @@ public class GameStoreTest {
         player3.play(game5, curPlayedTime);
         expected += curPlayedTime;
 
+        player3.installGame(game1);
+        curPlayedTime = 4;
+        player3.play(game1, curPlayedTime);
+        expected += curPlayedTime;
+
+        player3.installGame(game2);
+        curPlayedTime = 6;
+        player3.play(game2, curPlayedTime);
+        expected += curPlayedTime;
+
+        player3.installGame(game3);
+        curPlayedTime = 9;
+        player3.play(game3, curPlayedTime);
+        expected += curPlayedTime;
+
         assertEquals(expected, store.getSumPlayedTime());
     }
+
+
 }
