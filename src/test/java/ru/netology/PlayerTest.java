@@ -331,4 +331,20 @@ public class PlayerTest {
             ;
         });
     }
+    // New Tests
+    @Test
+    public void mostPlayedByGenreEqualsNullIfStoreNull() {
+        GameStore store = new GameStore();
+        Game game1 = new Game("Hitman", "Action", null);
+
+        Player player = new Player("Petya");
+        player.installGame(game1);
+        player.play(game1, 3);
+
+        Game actual = player.mostPlayerByGenre("Action");
+        Game expected = null;
+
+        assertEquals(expected, actual);
+    }
+
 }
