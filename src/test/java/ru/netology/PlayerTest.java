@@ -294,4 +294,5 @@ public class PlayerTest {
 
         assertEquals(expected, actual);
     }
+
 }
