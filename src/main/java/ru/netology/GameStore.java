@@ -86,13 +86,11 @@ public class GameStore {
         int sum = 0;
 
         for (Game game : games) {
-            if (game == null) {
-                return sum;
-            }
             for (String playerName : playedTime.keySet()) {
                 sum += playedTime.get(playerName);
             }
             return sum;
+
         }
         return sum;
     }
